@@ -1,0 +1,923 @@
+/* Importando uma fonte bonita do Google Fonts (opcional, mas recomendado) */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif; /* Fonte padrão do corpo */
+    overflow-x: hidden;
+}
+
+html, body {
+    background-color: #0b1d16; /* mesma cor do site */
+}
+
+/* --- HEADER --- */
+.header {
+    display: flex;
+    justify-content: center; /* Centraliza conteúdo horizontalmente */
+    align-items: center;     /* Centraliza conteúdo verticalmente */
+    height: 700px; /* Ocupa bastante tela, estilo "Capa" */
+    
+    /* Atenção: certifique-se que o caminho da imagem está correto no seu computador */
+    background-image: url('/vida-Projeto_kil/img/noite3.jpg'); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-titulo-container {
+    text-align: center;
+    color: white; /* Letras brancas no fundo noturno */
+    z-index: 5; /* Garante que o texto fique na frente da imagem de fundo */
+    
+    /* Um pouco de sombra para o texto 'saltar' da imagem */
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 
+                 0 0 20px rgba(168, 160, 255, 0.5); /* Sombra suave para o tema noturno */
+}
+
+/* --- ESTILO DOS TÍTULOS ESPECÍFICOS --- */
+.titulo-romantico {
+    font-family: 'Great Vibes', cursive; /* Fonte cursiva e romântica */
+    font-size: 5rem; /* Tamanho grande */
+    margin-bottom: -15px; /* Puxa o subtítulo para perto */
+    letter-spacing: 5px;
+    display: flex; 
+    justify-content: center;
+}
+
+.titulo-romantico span {
+    /* Define o ponto de origem do movimento */
+    display: inline-block; 
+    transform-origin: bottom; /* O movimento começará da parte de baixo */
+    
+    /* Aplica a animação principal: */
+    animation: onda 2.5s infinite ease-in-out; 
+    
+    /* Usa a variável --i (o número da letra) para criar o atraso */
+    animation-delay: calc(0.1s * var(--i)); 
+}
+
+/* --- 3. DEFINIÇÃO DA ANIMAÇÃO 'onda' --- */
+@keyframes onda {
+    /* Estado inicial */
+    0%, 100% {
+        transform: translateY(0) rotate(0deg); 
+        color: white;
+    }
+    
+    /* Meio do ciclo (ponto mais alto da 'onda') */
+    50% {
+        transform: translateY(-20px) rotate(5deg); /* Move para cima e inclina um pouco */
+        color: #FFC0CB; /* Opcional: Muda a cor para um rosa suave no pico */
+    }
+}
+
+.subtitulo-romantico {
+    font-family: 'Montserrat', sans-serif; /* Fonte limpa e legível */
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    /* ESSENCIAL: Permite que a tulipa seja posicionada em relação a este <p> */
+    position: relative; 
+    
+    /* Espaço extra à direita para a tulipa não ser cortada */
+    padding-right: 20px;
+}
+
+.tulipa-decoracao {
+    /* Posicionamento livre em relação ao pai */
+    position: absolute; 
+    
+    /* Tamanho e Rotação */
+    width: 114px; /* Ajuste o tamanho da tulipa conforme sua imagem */
+    height: auto;
+    transform: rotate(35deg); /* Rotação diagonal */
+
+    /* POSIÇÃO: Ajustes finos */
+    /* top: -10px a -15px para subir e se alinhar ao topo da palavra 'Amor' */
+    top: -40px;
+
+    /* right: 5px para colocá-la ao lado do 'R' (ou perto do 'r' minúsculo) */
+    right: 2px;
+    
+    /* Garante que fique acima de qualquer sombra de texto se houver */
+    z-index: 10; 
+}
+
+.lua {
+    position: fixed; /* A lua fica fixa na tela (efeito parallax) */
+    top: 100px;       /* Distância do topo */
+    right: 200px;     /* Distância da direita */
+    width: 150px;    /* Tamanho da lua */
+    z-index: 1;      /* Garante que fique acima do fundo, mas abaixo do texto se houver */
+    pointer-events: none; /* Impede que cliquem na lua e atrapalhe a navegação */
+    transition: opacity 0.1s ease; /* Suaviza a animação */
+}
+
+.vitrola-fixa {
+    /* Posiciona fixo no canto esquerdo superior */
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 120px; /* Defina um tamanho adequado */
+    height: auto;
+    cursor: pointer; /* Indica que é clicável */
+    z-index: 1000; /* Garante que fique acima de tudo */
+    transition: opacity 0.3s ease; /* Para o efeito de fade-out */
+    display: flex; /* Adiciona flexbox para alinhar os itens internos */
+    flex-direction: column; /* Coloca os itens em coluna (texto em cima, vitrola embaixo) */
+    align-items: center;
+}
+
+.vitrola-img {
+    width: 100%;
+    height: auto;
+    display: none; /* Esconde todas as imagens por padrão */
+    position: absolute; /* Permite que fiquem uma em cima da outra */
+    top: 0;
+    left: 0;
+}
+
+.vitrola-img.active {
+    display: block; /* Mostra a imagem que tem a classe 'active' */
+}
+
+.musica-dica {
+    /* Garante que o texto seja visível no fundo escuro */
+    color: white; 
+    font-size: 0.8em; /* Fonte menor para não competir com o título */
+    text-align: center;
+    margin-bottom: 5px; /* Espaço entre o texto e a imagem da vitrola */
+    
+    /* Uma pequena animação de pulsação para chamar a atenção */
+    animation: pulse 1.5s infinite;
+}
+
+/* Definição da Animação de Pulsação (sutileza) */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.03); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.declaracao {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start; /* ESSENCIAL: Não centraliza, alinha à esquerda */
+    min-height: 700px; /* Garante que a foto de 700px caiba */
+    background-color: black;
+    color: white;
+    overflow: hidden; /* ESSENCIAL: Corta a metade da foto */
+    padding: 0; /* Remove padding */
+    position: relative;
+    z-index: 1;
+}
+
+.declaracao::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Configuração da Imagem */
+    background-image: url('/vida-Projeto_kil/img/mar.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    opacity: 0.3; 
+    z-index: -1; 
+    
+    /* --- A MÁGICA DO DEGRADÊ (Bordas Suaves) --- */
+    /* Cria um degradê que vai de transparente -> preto (visível) -> transparente */
+    /* O 'black' na máscara significa 'mostrar a imagem', e 'transparent' significa 'esconder' */
+    
+    /* Para Chrome, Safari e Edge */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+    
+    /* Padrão para Firefox e outros */
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+
+.imagem-wrapper {
+    position: relative; /* Para posicionar as estrelas absolutamente dentro dele */
+    width: 600px;  /* Tamanho total da área da imagem */
+    height: 600px;
+    /* Empurra o container inteiro para a esquerda para cortar a metade */
+    margin-left: -300px; 
+    flex-shrink: 0; /* Garante que o container não diminua */
+    z-index: 1; /* Fica atrás do texto */
+}
+
+/* --- ESTILO DA IMAGEM 'NOS' (A Foto que Gira) --- */
+.nos {
+    width: 100%;  /* Largura total (o diâmetro do círculo) */
+    height: 100%; /* Altura total */
+    object-fit: cover; 
+    border-radius: 50%;
+    
+    /* Aplica a animação de rotação */
+    animation: rotacao-lenta 60s linear infinite; 
+    
+    position: relative;
+    z-index: 2;
+}
+
+/* --- AJUSTE DO TEXTO 'TNOS' --- */
+.tnos {
+    /* Define o espaço que o texto ocupa */
+    flex: 1;
+    margin-left: -50px; /* Mantém o texto afastado da foto gigante */
+    /*border: 1px solid blue;*/
+    z-index: 10;
+    
+    font-size: 1.2rem;
+    line-height: 1.8;
+
+    color: white; 
+    text-align: center;
+}
+
+.frase-principal {
+    font-size: 4.0rem; /* Tamanho maior para destaque */
+    font-family: 'Great Vibes', cursive; /* Sugestão: Usar a mesma fonte romântica para harmonia */
+    margin-bottom: 20px;
+    line-height: 1.2;
+    justify-self: center;
+}
+
+/* --- ESTILO PARA A FRASE DETALHE (Menor) --- */
+.frase-detalhe {
+    font-size: 1.5rem; /* Tamanho menor */
+    font-family: 'Sacramento', cursive; /* Fonte limpa para legibilidade */
+    line-height: 1.6;
+    max-width: 600px; /* Limita a largura para melhor leitura */
+    justify-self: center;
+}
+
+/* --- DEFINIÇÃO DA ANIMAÇÃO DE ROTAÇÃO --- */
+@keyframes rotacao-lenta {
+    from {
+        transform: rotate(0deg); /* Só gira, não move mais de lado */
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.estrela {
+    position: absolute; /* Posicionamento livre dentro do wrapper */
+    background-color: white;
+    border-radius: 50%; /* Formato de bolinha */
+    /* Efeito de brilho intenso */
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8),
+                0 0 20px 5px rgba(168, 160, 255, 0.4); /* Um halo azulado */
+    opacity: 0; /* Começa invisível */
+    z-index: 1; /* Fica atrás da imagem principal */
+    
+    /* Aplica a animação de piscar */
+    animation: piscar 4s infinite ease-in-out;
+}
+
+/* Animação de Entrando e Saindo (Piscar) */
+@keyframes piscar {
+    0%, 100% {
+        opacity: 0; /* Invisível */
+        transform: scale(0.5); /* Pequena */
+    }
+    50% {
+        opacity: 1; /* Totalmente visível */
+        transform: scale(1.2); /* Cresce um pouco */
+    }
+}
+
+/* --- POSICIONAMENTO INDIVIDUAL DAS ESTRELAS --- */
+/* Usamos top/left/right/bottom para espalhar ao redor do círculo de 700x700 */
+/* Usamos tamanhos variados e atrasos (delay) na animação para não piscarem juntas */
+
+.est1 { top: 10%; right: 15%; width: 8px; height: 8px; animation-delay: 0s; }
+.est2 { top: 25%; right: 0%; width: 12px; height: 12px; animation-delay: 1.5s; }
+.est3 { top: 50%; right: -5%; width: 6px; height: 6px; animation-delay: 0.5s; }
+.est4 { bottom: 25%; right: 0%; width: 10px; height: 10px; animation-delay: 2.5s; }
+.est5 { bottom: 10%; right: 15%; width: 7px; height: 7px; animation-delay: 1s; }
+
+/* Algumas estrelas mais para "dentro" da área esquerda para dar profundidade */
+.est6 { top: 15%; left: 30%; width: 9px; height: 9px; animation-delay: 3s; }
+.est7 { bottom: 20%; left: 40%; width: 5px; height: 5px; animation-delay: 0.2s; }
+.est8 { top: 45%; left: 25%; width: 11px; height: 11px; animation-delay: 1.8s; }
+
+/* --- TRANSITIONS (Gradientes) --- */
+.passagem1 {
+    display: flex;
+    height: 100px;
+    background-image: linear-gradient(to bottom, #0a0533, black);
+    position: relative;
+}
+
+.scroll-prompt {
+    /* Posiciona a dica no rodapé do passagem1, centralizado */
+    position: absolute; 
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    
+    /* Cores e tipografia para combinar com o tema noturno */
+    color: white; 
+    font-size: 0.9em;
+    font-weight: 500;
+    
+    /* Transição para suavizar o desaparecimento do JS */
+    opacity: 1;
+    transition: opacity 0.3s ease; 
+    z-index: 10;
+}
+
+/* Estilo do texto "role" */
+.scroll-text {
+    margin-bottom: 5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Criando o visual das setas */
+.seta-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.seta {
+    /* Desenha a cabeça da seta com bordas */
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white; /* A cor da ponta da seta */
+    margin-top: 6px;
+    
+    /* Aplica a animação */
+    animation: bounce 1.5s infinite;
+}
+
+/* A segunda seta tem um pequeno atraso para criar um efeito mais orgânico */
+.seta:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+/* Definição da Animação: Mover para cima e para baixo */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-5px); /* Sobe */
+    }
+    60% {
+        transform: translateY(-3px); /* Desce */
+    }
+}
+
+.passagem2 {
+    display: flex;
+    min-height: 200px;
+    background-image: linear-gradient(to top, #0a0533, black);
+}
+
+.galeria-secao {
+    background-image: linear-gradient(to bottom, #0a0533, rgb(17, 131, 131));
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden; /* IMPORTANTE: mantém os efeitos dentro da galeria */
+}
+
+.galeria-titulo {
+    font-family: 'Great Vibes', cursive; /* Fonte elegante */
+    font-size: 3rem;
+    margin-bottom: 40px;
+    color: #c9dbd2; /* Rosa suave */
+    text-shadow: 
+        0 0 10px rgba(182, 245, 216, 0.4),
+        0 0 20px rgba(182, 245, 216, 0.2);
+    animation: flutuarTitulo 4s ease-in-out infinite;
+}
+
+@keyframes flutuarTitulo {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.galeria-titulo span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: surgirLetra 0.5s ease forwards;
+    animation-play-state: paused; /* ⬅️ ISSO RESOLVE TUDO */
+}
+
+@keyframes surgirLetra {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.coracao {
+    position: absolute;
+    bottom: -30px;
+    font-size: 20px;
+    color: rgba(160, 255, 180, 0.7); /* verde claro */
+    animation: subir-coracao linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes subir-coracao {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-800px) scale(1.4);
+        opacity: 0;
+    }
+}
+
+.brilho {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: rgba(200, 255, 220, 0.9);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 10px rgba(180, 255, 210, 0.9),
+        0 0 20px rgba(120, 255, 180, 0.6);
+    animation: piscar 4s infinite ease-in-out;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* --- CARROSSEL CONTAINER (Onde a mágica do arrasto acontece) --- */
+.carrossel-container {
+    max-width: 100vw;
+    margin: 0 auto;
+    padding: 40px 80px;
+
+    overflow-x: scroll;
+    overflow-y: visible;
+
+    cursor: grab;
+}
+
+.carrossel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.carrossel {
+    display: flex;
+    flex-wrap: nowrap;
+
+    /* ❌ REMOVA overflow daqui */
+    width: max-content;
+
+    cursor: grab;
+    user-select: none;
+}
+
+.carrossel.active-dragging {
+    cursor: grabbing;
+}
+
+.carrossel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+.carrossel-container.active-dragging {
+    cursor: grabbing;
+}
+
+/* --- ESTILO DE CADA CARD --- */
+.card {
+    position: relative;
+    flex-shrink: 0;
+    width: 350px;
+    margin-right: 30px;
+    border-radius: 18px;
+    overflow: hidden;
+    background-color: #1a1a1a;
+
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 1;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.card.active {
+    transform: scale(1.07);
+    transform-origin: center bottom;
+    z-index: 10;
+}
+
+.card.dimmed {
+    transform: scale(0.9);
+    opacity: 0.6;
+}
+
+.card-imagem {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+
+    /* ESSENCIAL */
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+}
+
+.card-conteudo {
+    padding: 15px;
+}
+
+.card-texto {
+    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 100;
+    font-size: 1.5rem;
+    margin: 0;
+    color: #FFFAFA;
+}
+
+.card, .card-imagem, .card-conteudo, .card-texto {
+    user-select: none; 
+    -webkit-user-select: none; 
+    /* E GARANTA que não exista: pointer-events: none; */
+}
+
+.card img,
+.card-imagem {
+    pointer-events: none;   /* imagem não captura clique */
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Barra de rolagem */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Parte que se move */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        #41053c,
+        #42044e
+    );
+    border-radius: 20px;
+}
+
+.passagem3 {
+    display: flex;
+    min-height: 200px;
+    background-color: rgb(17, 131, 131);
+}
+
+.secao-tulipa-gigante {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 900px; /* Um pouco mais alta para caber tudo */
+    padding: 60px 20px;
+    
+    /* Removemos o degradê simples e usamos uma cor sólida de base */
+    background-color: rgb(17, 131, 131);
+    overflow: hidden;
+    position: relative; /* Essencial para o fundo funcionar */
+}
+
+/* --- O FUNDO MÁGICO QUE DESAPARECE --- */
+.secao-tulipa-gigante::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background-image: url('/vida-Projeto_kil/img/fundo-tulipas.jpg'); 
+    background-size: cover;
+    background-position: center;
+    
+    opacity: 0.7; 
+    z-index: 0; 
+    pointer-events: none;
+
+    /* --- A MÁGICA DOS DEGRADÊS COMBINADOS --- */
+    /* Explicando: O primeiro gradient cuida do topo/baixo, o segundo da direita. */
+    /* O 'mask-composite' faz com que a imagem só apareça onde os dois degradês permitem. */
+    
+    -webkit-mask-image: 
+        linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    
+    mask-image: 
+        linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+
+    /* Garante que as duas máscaras se cruzem (funciona como um filtro "E") */
+    -webkit-mask-composite: initial;
+    mask-composite: intersect;
+}
+
+/* Container da Imagem (Esquerda) */
+.tulipa-container-img {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    transform: translateX(-20px);
+    position: relative; /* Essencial para posicionar o texto "peguei ali" */
+    z-index: 2; /* Garante que fique na frente do fundo */
+}
+
+/* --- NOVO: O TEXTO "PEGUEI ALI" --- */
+.texto-peguei-ali {
+    position: absolute;
+    /* Posiciona acima da tulipa e um pouco para a esquerda */
+    top: -50px; 
+    left: 15%;
+    
+    font-family: 'Dancing Script', cursive; /* Fonte manuscrita divertida */
+    font-size: 2rem;
+    color: #ffffff; /* Rosa suave */
+    transform: rotate(-15deg); /* Uma inclinadinha charmosa */
+    text-shadow: 0 0 10px rgba(255, 192, 203, 0.6); /* Brilho */
+    
+    z-index: 10; /* Fica na frente da tulipa */
+    white-space: nowrap; /* Não quebra linha */
+}
+
+/* A Imagem da Tulipa em si */
+.tulipa-img-grande {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    filter: drop-shadow(0 0 20px rgba(255, 192, 203, 0.5));
+    animation: flutuarTulipa 5s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes flutuarTulipa {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+}
+
+/* Container do Texto Principal (Direita) */
+.tulipa-container-texto {
+    flex: 1;
+    padding: 40px;
+    text-align: left;
+    z-index: 2;
+    
+    /* Adiciona um leve desfoque apenas atrás do texto para dar destaque */
+    backdrop-filter: blur(1px); 
+    background: rgba(102, 104, 104, 0.151); /* Um toque da cor do fundo com transparência */
+    border-radius: 50px;
+}
+
+/* Estilo da Frase Romântica */
+.texto-romantico-tulipa {
+    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;
+    font-size: 3.2rem; /* Um pouco menor para caber melhor a frase longa */
+    line-height: 1.4;
+    color: #f0ebec; /* O seu rosa suave */
+    
+    /* Sombra projetada para o texto não "sumir" na imagem nítida */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9), 
+                 0 0 15px rgba(255, 192, 203, 0.3);
+    
+    margin: 0;
+    letter-spacing: 0.5px; /* Melhora a leitura */
+}
+
+.passagem4 {
+    display: flex;
+    min-height: 200px;
+    background-image: linear-gradient(to top, #00000000, rgb(17, 131, 131));
+}
+
+.secao-cosmica {
+    display: flex;
+    /* Ajuste de Altura: 1100px para ser bem imponente */
+    min-height: 1100px; 
+    background-color: #000; /* Fundo preto absoluto */
+    position: relative;
+    overflow: hidden;
+
+    /* A MÁGICA DA TRANSIÇÃO APENAS NO TOPO */
+    /* Isso faz a div começar transparente e ficar sólida em 15% da altura */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
+}
+
+/* Lado do Texto */
+.cosmica-lado-esquerdo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza o texto na altura gigante */
+    padding: 80px;
+    z-index: 2;
+}
+
+.frase-luz-principal {
+    /* Playfair Display: elegante, legível e clássica */
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    color: #ffffff;
+    line-height: 1.3;
+    margin-bottom: 30px;
+    font-style: italic;
+    font-weight: 500;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.frase-luz-detalhe {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    color: #FFC0CB; /* Rosa suave para o detalhe */
+    letter-spacing: 1.5px;
+    text-transform: lowercase; /* Charme extra para a descrição */
+    opacity: 0.9;
+}
+
+/* Lado do Vídeo */
+.cosmica-lado-direito {
+    flex: 1.2; /* Vídeo um pouco mais largo que o texto */
+    position: relative;
+}
+
+.video-espacial {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que o vídeo preencha toda a altura de 1100px */
+    
+    /* Transição suave na lateral para não cortar o vídeo bruscamente perto do texto */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);
+    mask-image: linear-gradient(to right, transparent 0%, black 20%);
+}
+
+.passagem5 {
+    display: flex;
+    min-height: 200px;
+    background-image: linear-gradient(to top, #000000, rgb(0, 0, 0));
+}
+
+.secao-final-surpresa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ocupa pelo menos a altura inteira da tela */
+    padding: 80px 20px;
+    position: relative;
+    overflow: hidden; /* Importante para as partículas não vazarem */
+
+    /* Degradê de cima para baixo: começa preto (para fundir com a seção anterior) 
+       e termina no seu azul petróleo/verde água */
+    background-image: linear-gradient(to bottom, #000000, #0a0533, rgb(17, 131, 131));
+}
+
+/* --- 1. ESTILO DAS FRASES SEQUENCIAIS (Topo) --- */
+.container-frases-sequenciais {
+    text-align: center;
+    margin-bottom: 60px;
+    z-index: 5; /* Fica na frente das partículas */
+}
+
+.frase-seq {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    color: #FFC0CB; /* Rosa suave */
+    margin: 15px 0;
+    opacity: 0; /* Começa invisível */
+    transform: translateY(20px); /* Começa um pouco mais para baixo */
+    
+    /* Aplica a animação de aparecer */
+    /* forwards garante que ela continue visível depois de aparecer */
+    animation: aparecerSuave 1.5s ease forwards;
+    animation-play-state: paused;
+}
+
+/* Atrasos (Delays) de 2 segundos entre cada uma */
+.fs1 { animation-delay: 0.5s; } /* Aparece logo no início */
+.fs2 { animation-delay: 2.5s; } /* 2s depois da primeira */
+.fs3 { animation-delay: 4.5s; } /* 2s depois da segunda */
+
+/* Animação simples de aparecer subindo */
+@keyframes aparecerSuave {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 2. TÍTULO DO UNIVERSO ONDULADO --- */
+.titulo-universo-onda {
+    font-family: 'Great Vibes', cursive;
+    font-size: 5rem; /* Bem grande */
+    text-align: center;
+    color: white;
+    margin-bottom: 80px;
+    line-height: 1.2;
+    z-index: 5;
+    text-shadow: 0 0 20px rgba(255, 192, 203, 0.5);
+}
+
+/* Reutiliza a mesma lógica do header */
+.titulo-universo-onda span {
+    display: inline-block;
+    transform-origin: bottom;
+    /* IMPORTANTE: Usa o mesmo nome da animação 'onda' que já criamos pro header */
+    animation: onda 2.5s infinite ease-in-out;
+    animation-delay: calc(0.1s * var(--i));
+}
+/* (Não precisamos recriar o @keyframes onda, ele já existe no seu CSS) */
+
+
+/* --- 3. IMAGENS DO RODAPÉ (Esquerda e Direita) --- */
+.container-imagens-final {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alinha todos verticalmente pelo meio */
+    gap: 40px; /* Espaço entre as fotos e a tulipa */
+    width: 100%;
+    max-width: 1200px;
+    z-index: 5;
+    margin-top: 50px;
+}
+
+/* Estilo específico para a Tulipa do Meio */
+.wrapper-tulipa-central {
+    width: 250px; /* Ajuste o tamanho conforme achar melhor */
+    display: flex;
+    justify-content: center;
+    transition: transform 0.5s ease;
+    filter: drop-shadow(0 0 15px rgba(255, 192, 203, 0.6)); /* Brilho rosa em volta da tulipa */
+}
+
+.wrapper-tulipa-central img {
+    width: 100%;
+    height: auto;
+    /* Faz a tulipa flutuar levemente */
+    animation: flutuarTulipa 3s ease-in-out infinite;
+}
+
+/* Animação de flutuação para a tulipa central */
+@keyframes flutuarTulipa {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.wrapper-img-final {
+    width: 300px; /* Tamanho das imagens */
+    height: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid rgba(255, 192, 203, 0.3); /* Borda rosa suave */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+}
+
+/* Efeito charmoso de inclinação */
+.wrapper-img-final.esquerda { transform: rotate(-5deg); }
+.wrapper-img-final.direita { transform: rotate(5deg); }
+
+/* Efeito ao passar o mouse (opcional) */
+.wrapper-img-final:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
+
+.wrapper-img-final img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
