@@ -26,7 +26,7 @@ html, body {
     height: 700px; /* Ocupa bastante tela, estilo "Capa" */
     
     /* Atenção: certifique-se que o caminho da imagem está correto no seu computador */
-    background-image: url('/vida-Projeto_kil/img/noite3.jpg'); 
+    background-image: url('../img/noite3.jpg'); 
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -191,7 +191,7 @@ html, body {
     height: 100%;
     
     /* Configuração da Imagem */
-    background-image: url('/vida-Projeto_kil/img/mar.png');
+    background-image: url('../img/mar.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -626,7 +626,7 @@ html, body {
     width: 100%;
     height: 100%;
     
-    background-image: url('/vida-Projeto_kil/img/fundo-tulipas.jpg'); 
+    background-image: url('../img/fundo-tulipas.jpg'); 
     background-size: cover;
     background-position: center;
     
